@@ -25,9 +25,7 @@ pub struct CratePeek {
 #[tool_router]
 impl CratePeek {
     pub fn new() -> Self {
-        Self {
-            tool_router: Self::tool_router(),
-        }
+        Self { tool_router: Self::tool_router() }
     }
 
     fn _create_resource_text(&self, uri: &str, name: &str) -> Resource {
@@ -36,9 +34,7 @@ impl CratePeek {
 
     #[tool(description = "Get the documentation for specified crate")]
     fn crate_doc(&self) -> Result<CallToolResult, McpError> {
-        Ok(CallToolResult::success(vec![Content::text(
-            "TODO: finish this tool!".to_string(),
-        )]))
+        Ok(CallToolResult::success(vec![Content::text("TODO: finish this tool!".to_string())]))
     }
 }
 
@@ -80,22 +76,20 @@ impl ServerHandler for CratePeek {
         match uri.as_str() {
             "str:////Users/to/some/path/" => {
                 let cwd = "/Users/to/some/path/";
-                Ok(ReadResourceResult {
-                    contents: vec![ResourceContents::text(cwd, uri)],
-                })
+                Ok(ReadResourceResult { contents: vec![ResourceContents::text(cwd, uri)] })
             }
             "memo://insights" => {
                 let memo = "Business Intelligence Memo\n\nAnalysis has revealed 5 key insights ...";
-                Ok(ReadResourceResult {
-                    contents: vec![ResourceContents::text(memo, uri)],
-                })
+                Ok(ReadResourceResult { contents: vec![ResourceContents::text(memo, uri)] })
             }
-            _ => Err(McpError::resource_not_found(
-                "resource_not_found",
-                Some(json!({
-                    "uri": uri
-                })),
-            )),
+            _ => {
+                Err(McpError::resource_not_found(
+                    "resource_not_found",
+                    Some(json!({
+                        "uri": uri
+                    })),
+                ))
+            }
         }
     }
 
@@ -104,10 +98,7 @@ impl ServerHandler for CratePeek {
         _request: Option<PaginatedRequestParam>,
         _: RequestContext<RoleServer>,
     ) -> Result<ListResourceTemplatesResult, McpError> {
-        Ok(ListResourceTemplatesResult {
-            next_cursor: None,
-            resource_templates: Vec::new(),
-        })
+        Ok(ListResourceTemplatesResult { next_cursor: None, resource_templates: Vec::new() })
     }
 
     async fn initialize(

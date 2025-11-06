@@ -130,7 +130,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "crate-peek-mcp-server"
+name = "crate-peek-server"
 version = "0.1.0"
 dependencies = [
  "anyhow",

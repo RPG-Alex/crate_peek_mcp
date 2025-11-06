@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-crate-peek-core = {path = "../crate-peek-core"}
+crate-peek-core = {path = "../core"}
 rmcp = { workspace = true, features = ["server", "transport-io"] }
 tokio = { workspace = true }
 tokio-util = { workspace = true }
