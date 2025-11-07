@@ -1,27 +1,17 @@
 //! # crate-peek-server
 use rmcp::{
-    ErrorData as McpError, RoleServer, ServerHandler, handler::server::router::{prompt::PromptRouter, tool::ToolRouter}, 
+    ErrorData as McpError, RoleServer, ServerHandler,
+    handler::server::router::{prompt::PromptRouter, tool::ToolRouter},
     model::{
-        AnnotateAble, 
-        CallToolResult, 
-        Content,
-        GetPromptRequestParam,
-        GetPromptResult, 
-        Implementation,
-        InitializeRequestParam, 
-        InitializeResult, 
-        ListResourceTemplatesResult, 
-        ListPromptsResult, 
-        PaginatedRequestParam, 
-        ProtocolVersion,
-        RawResource, 
-        ReadResourceRequestParam,
-        ReadResourceResult,
-        Resource,
-        ResourceContents,
-        ServerCapabilities,
-        ServerInfo,        
-    }, prompt_handler, prompt_router, service::RequestContext, tool, tool_handler, tool_router
+        AnnotateAble, CallToolResult, Content, GetPromptRequestParam, GetPromptResult,
+        Implementation, InitializeRequestParam, InitializeResult, ListPromptsResult,
+        ListResourceTemplatesResult, PaginatedRequestParam, ProtocolVersion, RawResource,
+        ReadResourceRequestParam, ReadResourceResult, Resource, ResourceContents,
+        ServerCapabilities, ServerInfo,
+    },
+    prompt_handler, prompt_router,
+    service::RequestContext,
+    tool, tool_handler, tool_router,
 };
 use serde_json::json;
 
@@ -124,14 +114,14 @@ impl ServerHandler for CratePeek {
     ) -> Result<InitializeResult, McpError> {
         Ok(self.get_info())
     }
-    
+
     fn ping(
         &self,
         context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<(), McpError>> + Send + '_ {
         std::future::ready(Ok(()))
     }
-    
+
     fn complete(
         &self,
         request: rmcp::model::CompleteRequestParam,
@@ -139,7 +129,7 @@ impl ServerHandler for CratePeek {
     ) -> impl Future<Output = Result<rmcp::model::CompleteResult, McpError>> + Send + '_ {
         std::future::ready(Ok(rmcp::model::CompleteResult::default()))
     }
-    
+
     fn set_level(
         &self,
         request: rmcp::model::SetLevelRequestParam,
@@ -147,7 +137,7 @@ impl ServerHandler for CratePeek {
     ) -> impl Future<Output = Result<(), McpError>> + Send + '_ {
         std::future::ready(Err(McpError::method_not_found::<rmcp::model::SetLevelRequestMethod>()))
     }
-    
+
     fn list_resources(
         &self,
         request: Option<rmcp::model::PaginatedRequestParam>,
@@ -155,7 +145,7 @@ impl ServerHandler for CratePeek {
     ) -> impl Future<Output = Result<rmcp::model::ListResourcesResult, McpError>> + Send + '_ {
         std::future::ready(Ok(rmcp::model::ListResourcesResult::default()))
     }
-    
+
     fn subscribe(
         &self,
         request: rmcp::model::SubscribeRequestParam,
@@ -163,15 +153,17 @@ impl ServerHandler for CratePeek {
     ) -> impl Future<Output = Result<(), McpError>> + Send + '_ {
         std::future::ready(Err(McpError::method_not_found::<rmcp::model::SubscribeRequestMethod>()))
     }
-    
+
     fn unsubscribe(
         &self,
         request: rmcp::model::UnsubscribeRequestParam,
         context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<(), McpError>> + Send + '_ {
-        std::future::ready(Err(McpError::method_not_found::<rmcp::model::UnsubscribeRequestMethod>()))
+        std::future::ready(Err(
+            McpError::method_not_found::<rmcp::model::UnsubscribeRequestMethod>(),
+        ))
     }
-    
+
     fn on_cancelled(
         &self,
         notification: rmcp::model::CancelledNotificationParam,
@@ -179,7 +171,7 @@ impl ServerHandler for CratePeek {
     ) -> impl Future<Output = ()> + Send + '_ {
         std::future::ready(())
     }
-    
+
     fn on_progress(
         &self,
         notification: rmcp::model::ProgressNotificationParam,
@@ -187,7 +179,7 @@ impl ServerHandler for CratePeek {
     ) -> impl Future<Output = ()> + Send + '_ {
         std::future::ready(())
     }
-    
+
     fn on_initialized(
         &self,
         context: rmcp::service::NotificationContext<RoleServer>,
@@ -195,7 +187,7 @@ impl ServerHandler for CratePeek {
         tracing::info!("client initialized");
         std::future::ready(())
     }
-    
+
     fn on_roots_list_changed(
         &self,
         context: rmcp::service::NotificationContext<RoleServer>,

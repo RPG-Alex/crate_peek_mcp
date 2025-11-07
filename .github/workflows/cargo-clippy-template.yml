@@ -28,6 +28,3 @@ jobs:
 
       - name: Run Clippy
         run: cargo clippy --all-targets -- -D warnings
-
-      - name:  Unify windows-sys version
-        run: cargo update -p windows-sys@0.61.2
