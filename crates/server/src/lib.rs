@@ -32,6 +32,7 @@ impl CratePeek {
         Self { tool_router: Self::tool_router(), prompt_router: Self::prompt_router() }
     }
 
+    #[allow(dead_code)]
     fn create_resource_text(uri: &str, name: &str) -> Resource {
         RawResource::new(uri, name.to_string()).no_annotation()
     }
@@ -117,47 +118,47 @@ impl ServerHandler for CratePeek {
 
     fn ping(
         &self,
-        context: RequestContext<RoleServer>,
+        _context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<(), McpError>> + Send + '_ {
         std::future::ready(Ok(()))
     }
 
     fn complete(
         &self,
-        request: rmcp::model::CompleteRequestParam,
-        context: RequestContext<RoleServer>,
+        _request: rmcp::model::CompleteRequestParam,
+        _context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<rmcp::model::CompleteResult, McpError>> + Send + '_ {
         std::future::ready(Ok(rmcp::model::CompleteResult::default()))
     }
 
     fn set_level(
         &self,
-        request: rmcp::model::SetLevelRequestParam,
-        context: RequestContext<RoleServer>,
+        _request: rmcp::model::SetLevelRequestParam,
+        _context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<(), McpError>> + Send + '_ {
         std::future::ready(Err(McpError::method_not_found::<rmcp::model::SetLevelRequestMethod>()))
     }
 
     fn list_resources(
         &self,
-        request: Option<rmcp::model::PaginatedRequestParam>,
-        context: RequestContext<RoleServer>,
+        _request: Option<rmcp::model::PaginatedRequestParam>,
+        _context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<rmcp::model::ListResourcesResult, McpError>> + Send + '_ {
         std::future::ready(Ok(rmcp::model::ListResourcesResult::default()))
     }
 
     fn subscribe(
         &self,
-        request: rmcp::model::SubscribeRequestParam,
-        context: RequestContext<RoleServer>,
+        _request: rmcp::model::SubscribeRequestParam,
+        _context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<(), McpError>> + Send + '_ {
         std::future::ready(Err(McpError::method_not_found::<rmcp::model::SubscribeRequestMethod>()))
     }
 
     fn unsubscribe(
         &self,
-        request: rmcp::model::UnsubscribeRequestParam,
-        context: RequestContext<RoleServer>,
+        _request: rmcp::model::UnsubscribeRequestParam,
+        _context: RequestContext<RoleServer>,
     ) -> impl Future<Output = Result<(), McpError>> + Send + '_ {
         std::future::ready(Err(
             McpError::method_not_found::<rmcp::model::UnsubscribeRequestMethod>(),
@@ -166,23 +167,23 @@ impl ServerHandler for CratePeek {
 
     fn on_cancelled(
         &self,
-        notification: rmcp::model::CancelledNotificationParam,
-        context: rmcp::service::NotificationContext<RoleServer>,
+        _notification: rmcp::model::CancelledNotificationParam,
+        _context: rmcp::service::NotificationContext<RoleServer>,
     ) -> impl Future<Output = ()> + Send + '_ {
         std::future::ready(())
     }
 
     fn on_progress(
         &self,
-        notification: rmcp::model::ProgressNotificationParam,
-        context: rmcp::service::NotificationContext<RoleServer>,
+        _notification: rmcp::model::ProgressNotificationParam,
+        _context: rmcp::service::NotificationContext<RoleServer>,
     ) -> impl Future<Output = ()> + Send + '_ {
         std::future::ready(())
     }
 
     fn on_initialized(
         &self,
-        context: rmcp::service::NotificationContext<RoleServer>,
+        _context: rmcp::service::NotificationContext<RoleServer>,
     ) -> impl Future<Output = ()> + Send + '_ {
         tracing::info!("client initialized");
         std::future::ready(())
@@ -190,7 +191,7 @@ impl ServerHandler for CratePeek {
 
     fn on_roots_list_changed(
         &self,
-        context: rmcp::service::NotificationContext<RoleServer>,
+        _context: rmcp::service::NotificationContext<RoleServer>,
     ) -> impl Future<Output = ()> + Send + '_ {
         std::future::ready(())
     }
